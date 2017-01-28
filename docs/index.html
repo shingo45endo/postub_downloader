@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="style.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="postub-pdf-downloader-bookmarklet">POSTUB PDF Downloader Bookmarklet</h1>
+<p><a href="https://shingo45endo.github.io/postub_downloader/" class="uri">https://shingo45endo.github.io/postub_downloader/</a></p>
+<p><img src="./postub_downloader.gif" alt="POSTUB PDF Downloader Bookmarklet" /></p>
+<p>This is a bookmarklet to download PDF files as a zip file for POSTUB system.</p>
+<p><a href="https://www.nri-secure.co.jp/service/postub/index.html">POSTUB</a> is one of an electronic mailbox system for Japanese financial institutions. This system is used to send personal correspondences regarding trading reports. However, it doesn’t have “bulk download” feature even though there are many reports which should be downloaded.</p>
+<p>This bookmarklet can download all the PDF files on the current page as a zip file.</p>
+<hr />
+<p>POSTUB(電子信書交付サービス)からPDFファイルをまとめてzipファイルとしてダウンロードするブックマークレットです。</p>
+<p><a href="https://www.nri-secure.co.jp/service/postub/index.html">POSTUB</a>は日本のいくつかの金融機関で使われている電子信書交付サービスで、取引や運用についての報告書を電子交付するために使われています。しかし、大量の報告書が交付されるにもかかわらず「まとめてダウンロード」のような機能がなく一つ一つダウンロードするしかないため非常に不便です。</p>
+<p>このブックマークレットを使うことで、現在のページ上のすべてのPDFファイルをzipファイルとしてダウンロードできます。</p>
+<h2 id="usage">Usage</h2>
+<p><a href="javascript:(function(){var a='https://shingo45endo.github.io/postub_downloader/postub_downloader.js?'+Date.now();var d=document;var e=d.createElement('script');e.charset='utf-8';e.src=a;d.getElementsByTagName('head')[0].appendChild(e);})();" style="padding: 0.25rem 1rem; border-radius: 0.25rem; background-color: rgba(0,128,255,0.125); font-size: 1.25rem;">POSTUB PDF Downloader Bookmarklet</a></p>
+<ol>
+<li>Bookmark the above link.</li>
+<li>Move to POSTUB website.</li>
+<li>Choose the bookmark on a POSTUB page which contains a list of PDF files.</li>
+<li>All the PDF files on the current page will be downloaded and archived as a zip file automatically.</li>
+</ol>
+<hr />
+<ol>
+<li>上のリンクをブックマークに登録します。</li>
+<li>POSTUBのサイトに移動します。</li>
+<li>PDFのリストが表示されているページ上で、登録したブックマークを選択します。</li>
+<li>現在のページ上のすべてのPDFファイルが自動的にダウンロードされ、zipファイルにアーカイブされます。</li>
+</ol>
+<h2 id="license">License</h2>
+<p>MIT</p>
+<h2 id="author">Author</h2>
+<p><a href="https://github.com/shingo45endo">shingo45endo</a></p>
+</body>
+</html>
