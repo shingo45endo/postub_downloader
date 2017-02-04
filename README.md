@@ -23,12 +23,16 @@ POSTUB(電子信書交付サービス)からPDFファイルをまとめてzipフ
 Usage
 -----
 
-<a href="javascript:(function(){var a='https://shingo45endo.github.io/postub_downloader/postub_downloader.js?'+Date.now();var d=document;var e=d.createElement('script');e.charset='utf-8';e.src=a;d.getElementsByTagName('head')[0].appendChild(e);})();" style="padding: 0.25rem 1rem; border-radius: 0.25rem; background-color: rgba(0,128,255,0.125); font-size: 1.25rem;">POSTUB PDF Downloader Bookmarklet</a>
+<a href="javascript:(function(){var a='https://shingo45endo.github.io/postub_downloader/postub_downloader.js?'+Date.now();var d=document;var e=d.createElement('script');e.charset='utf-8';e.src=a;d.getElementsByTagName('head')[0].appendChild(e);})();" style="padding: 0.5rem 1rem; border-radius: 0.25rem; background-color: rgba(0,128,255,0.125); font-size: 1.25rem;">POSTUB PDF Downloader Bookmarklet</a>
 
 1. Bookmark the above link.
 2. Move to POSTUB website.
 3. Choose the bookmark on a POSTUB page which contains a list of PDF files.
 4. All the PDF files on the current page will be downloaded and archived as a zip file automatically.
+	* If your browser doesn't support bookmarklets (ex. Microsoft Edge), after entering Developer Mode by hitting <kbd>F12</kbd>, input the following code snippet on Console tab.
+		```javascript
+		(function(){var a='https://shingo45endo.github.io/postub_downloader/postub_downloader.js?'+Date.now();var d=document;var e=d.createElement('script');e.charset='utf-8';e.src=a;d.getElementsByTagName('head')[0].appendChild(e);})();
+		```
 
 - - - - - - - - - - - - - - - -
 
@@ -36,6 +40,8 @@ Usage
 2. POSTUBのサイトに移動します。
 3. PDFのリストが表示されているページ上で、登録したブックマークを選択します。
 4. 現在のページ上のすべてのPDFファイルが自動的にダウンロードされ、zipファイルにアーカイブされます。
+	* ブラウザがブックマークレットをサポートしていない場合、<kbd>F12</kbd>を押して開発者モードに移動し、コンソールタブで上記のコードスニペットを入力してください。
+
 
 License
 -------
