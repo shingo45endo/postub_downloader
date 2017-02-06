@@ -176,7 +176,6 @@
 				var m = attr.match(/^.*doInline\(\s*'(.*?)'\s*.\s*'(.*?)'/);
 				if (m && m.length === 3) {
 					items.push({
-						index: items.length,
 						name: m[2] + '.pdf',
 						url: m[1] + '?message_no=' + m[2] + '&messageNo=' + m[2],
 						date: new Date(m[2].match(/^(\d{4})(\d{2})(\d{2})/).slice(1).join('-') + 'T00:00:00')
@@ -258,28 +257,30 @@
 		if (states.indexOf(3) === -1) {	// 3: XMLHttpRequest.LOADING
 			var index = states.indexOf(-1);
 			if (index !== -1 && Date.now() - lastDownload > 1000) {
-				var item = items[index];
-
 				var xhr = new XMLHttpRequest();
-				xhr.open('GET', item.url + '&_=' + Date.now());
+				xhr.open('GET', items[index].url + '&_=' + Date.now());
 				xhr.responseType = 'arraybuffer';
-				xhr.onreadystatechange = function() {
-					// Updates the status of download items.
-					item.readyState = this.readyState;
-					if (this.readyState === 4 && this.status === 200) {
-						item.content = new Uint8Array(this.response);
-						lastDownload = Date.now();
-					}
-				};
-				xhr.onprogress = function(event) {
-					// Updates progress bars of all the download items.
-					var progress = document.getElementById('my-progress-' + item.index);
-					if (progress) {
-						progress.value = event.loaded;
-						progress.max = event.total;
-						progress.title = progress.value + ' / ' + progress.max;
-					}
-				};
+				xhr.onreadystatechange = (function(i) {
+					return function() {
+						// Updates the status of download items.
+						items[i].readyState = this.readyState;
+						if (this.readyState === 4 && this.status === 200) {
+							items[i].content = new Uint8Array(this.response);
+							lastDownload = Date.now();
+						}
+					};
+				})(index);
+				xhr.onprogress = (function(i) {
+					return function(event) {
+						// Updates progress bars of all the download items.
+						var progress = document.getElementById('my-progress-' + i);
+						if (progress) {
+							progress.value = event.loaded;
+							progress.max = event.total;
+							progress.title = progress.value + ' / ' + progress.max;
+						}
+					};
+				})(index);
 				xhr.onload = function() {
 					// Updates the total progress bar.
 					var progress = document.getElementById('my-total-progress');
