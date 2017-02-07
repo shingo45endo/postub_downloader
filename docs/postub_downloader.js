@@ -176,7 +176,6 @@
 				var m = attr.match(/^.*doInline\(\s*'(.*?)'\s*.\s*'(.*?)'/);
 				if (m && m.length === 3) {
 					items.push({
-						index: items.length,
 						name: m[2] + '.pdf',
 						url: m[1] + '?message_no=' + m[2] + '&messageNo=' + m[2],
 						date: new Date(m[2].match(/^(\d{4})(\d{2})(\d{2})/).slice(1).join('-') + 'T00:00:00')
@@ -187,6 +186,31 @@
 		}
 
 		return items;
+	}
+
+	/**
+	 *	Updadtes the progress bar.
+	 *
+	 *	@param {number} index - An index of the item.
+	 *	@param {ProgressEvent} progressEvent - A progress event.
+	 */
+	function updateItemProgress(index, progressEvent) {
+		var progress = document.getElementById('my-progress-' + index);
+		if (!progress) {
+			return;
+		}
+
+		var label = Math.floor(progressEvent.loaded / 1024) + 'KB';
+		if (event.lengthComputable) {
+			progress.max = progressEvent.total;
+			progress.value = progressEvent.loaded;
+			label += ' (' + Math.floor(progressEvent.loaded * 100 / progressEvent.total) + '%)';
+		} else {
+			progress.removeAttribute('max');
+			progress.removeAttribute('value');
+		}
+		progress.title = label;
+		progress.textContent  = label;
 	}
 
 	// If the bookmarklet is already executed, stop it and exit.
@@ -258,37 +282,42 @@
 		if (states.indexOf(3) === -1) {	// 3: XMLHttpRequest.LOADING
 			var index = states.indexOf(-1);
 			if (index !== -1 && Date.now() - lastDownload > 1000) {
-				var item = items[index];
-
 				var xhr = new XMLHttpRequest();
-				xhr.open('GET', item.url + '&_=' + Date.now());
+
+				xhr.open('GET', items[index].url + '&_=' + Date.now());
 				xhr.responseType = 'arraybuffer';
-				xhr.onreadystatechange = function() {
-					// Updates the status of download items.
-					item.readyState = this.readyState;
-					if (this.readyState === 4 && this.status === 200) {
-						item.content = new Uint8Array(this.response);
-						lastDownload = Date.now();
-					}
-				};
-				xhr.onprogress = function(event) {
-					// Updates progress bars of all the download items.
-					var progress = document.getElementById('my-progress-' + item.index);
-					if (progress) {
-						progress.value = event.loaded;
-						progress.max = event.total;
-						progress.title = progress.value + ' / ' + progress.max;
-					}
-				};
-				xhr.onload = function() {
-					// Updates the total progress bar.
-					var progress = document.getElementById('my-total-progress');
-					if (progress) {
-						progress.max = items.length;
-						progress.value = items.map(function(item) {return (item.content) ? 1 : 0;}).reduce(function(a, b) {return a + b;});
-						progress.title = progress.value + ' / ' + progress.max;
-					}
-				};
+
+				xhr.onreadystatechange = (function(i) {
+					return function() {
+						// Updates the status of download items.
+						items[i].readyState = this.readyState;
+						if (this.readyState === 4 && this.status === 200) {
+							items[i].content = new Uint8Array(this.response);
+							lastDownload = Date.now();
+						}
+					};
+				})(index);
+				xhr.onprogress = (function(i) {
+					return function(event) {
+						updateItemProgress(i, event);
+					};
+				})(index);
+				xhr.onloadend = (function(i) {
+					return function(event) {
+						updateItemProgress(i, event);
+
+						// Updates the total progress bar.
+						var progress = document.getElementById('my-total-progress');
+						if (progress) {
+							progress.max = items.length;
+							progress.value = items.map(function(item) {return (item.content) ? 1 : 0;}).reduce(function(a, b) {return a + b;});
+							var label = progress.value + ' / ' + progress.max;
+							progress.title = label;
+							progress.textContent  = label;
+						}
+					};
+				})(index);
+
 				xhr.send();
 			}
 		}
