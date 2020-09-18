@@ -165,7 +165,7 @@
 	function makeItemList() {
 		var items = [];
 
-		var elems = document.querySelectorAll('a.buttonPDF1');
+		var elems = document.querySelectorAll('a[href*="DocumentTextDisplayAction.do"]');
 		for (var i = 0; i < elems.length; i++) {
 			var attrs = ['href', 'onclick'];
 			for (var j = 0; j < attrs.length; j++) {
@@ -227,10 +227,10 @@
 	}
 
 	// Adds a download link and a progress bar.
-	document.querySelector('body').insertAdjacentHTML('afterbegin', '<div style="width: 954px; margin: 1rem auto; text-align: left; line-height: 1.5;"><a id="my-zipfile" style="font-size: 150%;">Downloading...</a><br><progress id="my-total-progress" style="width: 100%; height: 1rem;"></progress><br><hr>');
+	document.querySelector('header').insertAdjacentHTML('beforebegin', '<div style="padding: 1rem; text-align: left; line-height: 1.5;"><a id="my-zipfile" style="font-size: 150%;">Downloading...</a><br><progress id="my-total-progress" style="width: 100%; height: 1rem;"></progress><br><hr>');
 
 	// Adds progress bars to all the download buttons.
-	var elems = document.querySelectorAll('a.buttonPDF1');
+	var elems = document.querySelectorAll('a[href*="DocumentTextDisplayAction.do"]');
 	for (var i = 0; i < elems.length; i++) {
 		var elem = elems[i];
 		elem.insertAdjacentHTML('afterend', '<progress id="my-progress-' + i + '" style="display: block; width: 100%; margin-top: 0.25rem;" value="0"></progress>');
