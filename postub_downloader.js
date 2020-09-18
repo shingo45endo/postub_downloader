@@ -189,7 +189,7 @@
 	}
 
 	/**
-	 *	Updadtes the progress bar.
+	 *	Updates the progress bar.
 	 *
 	 *	@param {number} index - An index of the item.
 	 *	@param {ProgressEvent} progressEvent - A progress event.
@@ -210,10 +210,10 @@
 			progress.removeAttribute('value');
 		}
 		progress.title = label;
-		progress.textContent  = label;
+		progress.textContent = label;
 	}
 
-	// If the bookmarklet is already executed, stop it and exit.
+	// If the bookmarklet is already executed, stops it and exits.
 	if (document.getElementById('my-zipfile')) {
 		window.alert('Already done. Please reload this page and try it again.');
 		return;
@@ -313,7 +313,7 @@
 							progress.value = items.map(function(item) {return (item.content) ? 1 : 0;}).reduce(function(a, b) {return a + b;});
 							var label = progress.value + ' / ' + progress.max;
 							progress.title = label;
-							progress.textContent  = label;
+							progress.textContent = label;
 						}
 					};
 				})(index);
