@@ -206,8 +206,14 @@
 			progress.value = progressEvent.loaded;
 			label += ' (' + Math.floor(progressEvent.loaded * 100 / progressEvent.total) + '%)';
 		} else {
-			progress.removeAttribute('max');
-			progress.removeAttribute('value');
+			if (progressEvent.type === "load") {
+				progress.max = progress.value = progressEvent.loaded;
+				label += ' (100%)';
+			}
+			else {
+				progress.removeAttribute('max');
+				progress.removeAttribute('value');
+			}
 		}
 		progress.title = label;
 		progress.textContent = label;
@@ -302,7 +308,7 @@
 						updateItemProgress(i, event);
 					};
 				})(index);
-				xhr.onloadend = (function(i) {
+				xhr.onload = (function(i) {
 					return function(event) {
 						updateItemProgress(i, event);
 
